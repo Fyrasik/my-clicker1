@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой кликер на GitHub</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .counter {
+            font-size: 5em;
+            font-weight: bold;
+            margin: 40px 0;
+            color: #ffeb3b;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .click-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+        .click-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+        .reset-btn {
+            background: #4ecdc4;
+            color: white;
+        }
+        .reset-btn:hover {
+            background: #45b7af;
+            transform: scale(1.05);
+        }
+        .stats {
+            margin-top: 30px;
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Мой GitHub Кликер 🎮</h1>
+        <div class="counter" id="counter">0</div>
+        
+        <div class="buttons">
+            <button class="click-btn" onclick="clickCounter()">🔥 КЛИКНИ МЕНЯ! 🔥</button>
+            <button class="reset-btn" onclick="resetCounter()">🔄 СБРОСИТЬ</button>
+        </div>
+        
+        <div class="stats" id="stats">
+            Скорость: <span id="speed">0</span> кликов/сек
+        </div>
+    </div>
+
+    <script>
+        let count = 0;
+        let lastClickTime = Date.now();
+        let clicksPerSecond = 0;
+        
+        function clickCounter() {
+            count++;
+            document.getElementById('counter').textContent = count;
+            
+            // Расчет скорости кликов
+            const now = Date.now();
+            const timeDiff = (now - lastClickTime) / 1000;
+            clicksPerSecond = Math.round(1 / timeDiff);
+            lastClickTime = now;
+            
+            document.getElementById('speed').textContent = clicksPerSecond;
+            
+            // Анимация
+            if (count % 10 === 0) {
+                document.getElementById('counter').style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    document.getElementById('counter').style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+        
+        function resetCounter() {
+            if (confirm('Точно сбросить счетчик?')) {
+                count = 0;
+                clicksPerSecond = 0;
+                document.getElementById('counter').textContent = count;
+                document.getElementById('speed').textContent = clicksPerSecond;
+            }
+        }
+    </script>
+</body>
+</html>
